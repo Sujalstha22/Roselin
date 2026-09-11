@@ -32,6 +32,24 @@ const Navbar = () => {
   const { totalItems, toggleCart } = useCart();
 
   /* =========================================================
+     LOCK BODY SCROLL WHEN MOBILE MENU IS OPEN
+     ========================================================= */
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    };
+  }, [menuOpen]);
+
+  /* =========================================================
      NAVBAR SCROLL BEHAVIOR
      ========================================================= */
 
@@ -41,39 +59,36 @@ const Navbar = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      /*
-       * TOP OF PAGE
-       * Navbar is visible and transparent
-       */
-      if (currentScrollY <= 10) {
+      /* TOP OF PAGE */
+      if (currentScrollY <= 15) {
         setIsScrolled(false);
         setShowNavbar(true);
-
         lastScrollY = currentScrollY;
         return;
       }
 
-      /*
-       * We are no longer at the top.
-       * Navbar gets burgundy background.
-       */
       setIsScrolled(true);
 
-      /*
-       * SCROLLING DOWN
-       * Hide navbar
-       */
-      if (currentScrollY > lastScrollY + 3) {
-        setShowNavbar(false);
-      } else if (currentScrollY < lastScrollY - 3) {
-        /*
-         * SCROLLING UP
-         * Show navbar
-         */
+      // Do NOT hide navbar if mobile menu is open!
+      if (menuOpen) {
         setShowNavbar(true);
+        lastScrollY = currentScrollY;
+        return;
       }
 
-      lastScrollY = currentScrollY;
+      const diff = currentScrollY - lastScrollY;
+      const isMobile = window.innerWidth < 1280;
+      // Use higher threshold on mobile so finger taps and micro-jitters don't hide navbar
+      const threshold = isMobile ? 20 : 6;
+
+      if (Math.abs(diff) >= threshold) {
+        if (diff > 0) {
+          setShowNavbar(false);
+        } else {
+          setShowNavbar(true);
+        }
+        lastScrollY = currentScrollY;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, {
@@ -83,7 +98,7 @@ const Navbar = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [menuOpen]);
 
 
   /* =========================================================
@@ -132,10 +147,10 @@ const Navbar = () => {
           <div className="order-1 flex flex-1 justify-start xl:hidden">
             <button
               type="button"
-              aria-label="Toggle Menu"
+              aria-label={menuOpen ? "Close Menu" : "Toggle Menu"}
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((prev) => !prev)}
-              className="relative z-50 flex flex-col gap-1.5 p-2"
+              className="relative z-50 flex min-h-[44px] min-w-[44px] touch-manipulation cursor-pointer flex-col items-center justify-center gap-1.5 p-2 rounded-md active:scale-95 transition-transform"
             >
               {/* Top line */}
               <span
@@ -327,15 +342,17 @@ const Navbar = () => {
               className="
                 relative
                 flex
+                min-h-[44px]
+                min-w-[44px]
+                touch-manipulation
                 cursor-pointer
                 items-center
                 justify-center
-
                 text-[#e4e3e2]
                 hover:text-rose-red
-
-                transition-colors
-                duration-300
+                active:scale-95
+                transition-all
+                duration-200
               "
             >
               <svg
@@ -367,7 +384,7 @@ const Navbar = () => {
               </svg>
 
               {/* Badge counter matching design in the image */}
-              <span className="absolute -top-1.5 -right-1.5 min-w-[15px] h-[15px] px-1 rounded-full bg-rose-red text-[9px] font-semibold text-white flex items-center justify-center shadow-xs">
+              <span className="absolute top-1 right-1 xl:-top-1.5 xl:-right-1.5 min-w-[15px] h-[15px] px-1 rounded-full bg-rose-red text-[9px] font-semibold text-white flex items-center justify-center shadow-xs">
                 {totalItems}
               </span>
             </button>
@@ -382,17 +399,20 @@ const Navbar = () => {
                 aria-label={isMuted ? "Unmute Audio" : "Mute Audio"}
                 onClick={toggleAudio}
                 className="
-      flex
-      size-6
-      items-center
-      justify-center
-      cursor-pointer
-      text-[#e4e3e2]
-      transition-opacity
-      duration-300
-      hover:opacity-70
-      xl:size-[1.5vw]
-    "
+                  flex
+                  min-h-[44px]
+                  min-w-[44px]
+                  touch-manipulation
+                  items-center
+                  justify-center
+                  cursor-pointer
+                  text-[#e4e3e2]
+                  transition-all
+                  duration-200
+                  hover:opacity-70
+                  active:scale-95
+                  xl:size-[1.5vw]
+                "
               >
                 {isMuted ? (
                   <svg

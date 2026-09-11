@@ -4,9 +4,8 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "gsap/SplitText";
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(ScrollTrigger);
 
 const FRAME_COUNT = 136;
 
@@ -25,7 +24,7 @@ const SequenceSection = () => {
 
       if (!section || !canvas || !firstText || !secondText) return;
 
-      const context = canvas.getContext("2d");
+      const context = canvas.getContext("2d", { alpha: false });
       if (!context) return;
 
       /* =====================================================
@@ -33,6 +32,7 @@ const SequenceSection = () => {
          ===================================================== */
       const images: HTMLImageElement[] = new Array(FRAME_COUNT);
       let currentFrameIndex = 0;
+      let hasDrawn = false;
 
       const drawImageToCanvas = (image: HTMLImageElement) => {
         const canvasWidth = canvas.width;
@@ -59,8 +59,8 @@ const SequenceSection = () => {
           y = (canvasHeight - height) / 2;
         }
 
-        context.clearRect(0, 0, canvasWidth, canvasHeight);
         context.drawImage(image, x, y, width, height);
+        hasDrawn = true;
       };
 
       const renderFrame = (index: number) => {
@@ -73,8 +73,8 @@ const SequenceSection = () => {
           return;
         }
 
-        // Fallback to closest loaded frame
-        for (let offset = 1; offset < 25; offset++) {
+        // Fallback: search outward for ANY loaded frame so canvas is NEVER blank
+        for (let offset = 1; offset < FRAME_COUNT; offset++) {
           const prev = images[targetIndex - offset];
           if (prev && prev.complete && prev.naturalWidth > 0) {
             drawImageToCanvas(prev);
@@ -88,14 +88,25 @@ const SequenceSection = () => {
         }
       };
 
-      // Load 136 frames from /images/home/frames/
+      /* =====================================================
+         LOAD FIRST FRAME IMMEDIATELY (HIGH PRIORITY)
+         ===================================================== */
+      const firstFrame = new Image();
+      firstFrame.src = "/images/home/frames/frame_001.jpg";
+      firstFrame.onload = () => {
+        images[0] = firstFrame;
+        drawImageToCanvas(firstFrame);
+      };
+
+      // Load remaining frames with priority around the start
       for (let i = 0; i < FRAME_COUNT; i++) {
+        if (i === 0) continue;
         const img = new Image();
         const frameNumber = String(i + 1).padStart(3, "0");
         img.src = `/images/home/frames/frame_${frameNumber}.jpg`;
 
         img.onload = () => {
-          if (i === currentFrameIndex || (currentFrameIndex === 0 && i === 0)) {
+          if (!hasDrawn || i === currentFrameIndex) {
             renderFrame(currentFrameIndex);
           }
         };
@@ -108,13 +119,13 @@ const SequenceSection = () => {
          ===================================================== */
       const resizeCanvas = () => {
         const isMobile = window.innerWidth < 768;
-        // Cap DPR at 1.5 on mobile to reduce GPU/memory pressure
+        // Cap DPR at 1.5 on mobile to conserve GPU memory
         const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2);
         const width = window.innerWidth;
         const height = window.innerHeight;
 
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
         canvas.style.width = `${width}px`;
         canvas.style.height = `${height}px`;
 
@@ -125,64 +136,35 @@ const SequenceSection = () => {
       window.addEventListener("resize", resizeCanvas, { passive: true });
 
       /* =====================================================
-         SPLIT TEXT SETUP
+         TEXT ANIMATION SETUP (MOBILE-RESILIENT)
          ===================================================== */
+      const isMobile = window.innerWidth < 768;
       const firstHeading = firstText.querySelector("h2");
       const firstParagraph = firstText.querySelector("p");
       const secondHeading = secondText.querySelector("h2");
       const secondParagraph = secondText.querySelector("p");
 
-      let firstHeadingSplit: SplitText | null = null;
-      let firstParagraphSplit: SplitText | null = null;
-      let secondHeadingSplit: SplitText | null = null;
-      let secondParagraphSplit: SplitText | null = null;
+      const firstElements = [firstHeading, firstParagraph].filter(Boolean) as HTMLElement[];
+      const secondElements = [secondHeading, secondParagraph].filter(Boolean) as HTMLElement[];
 
-      let firstLines: HTMLElement[] = [];
-      let secondLines: HTMLElement[] = [];
-
-      try {
-        if (firstHeading && firstParagraph && secondHeading && secondParagraph) {
-          firstHeadingSplit = new SplitText(firstHeading, { type: "lines" });
-          firstParagraphSplit = new SplitText(firstParagraph, { type: "lines" });
-          secondHeadingSplit = new SplitText(secondHeading, { type: "lines" });
-          secondParagraphSplit = new SplitText(secondParagraph, { type: "lines" });
-
-          firstLines = [
-            ...(firstHeadingSplit.lines as HTMLElement[]),
-            ...(firstParagraphSplit.lines as HTMLElement[]),
-          ];
-          secondLines = [
-            ...(secondHeadingSplit.lines as HTMLElement[]),
-            ...(secondParagraphSplit.lines as HTMLElement[]),
-          ];
-        }
-      } catch (err) {
-        firstLines = [firstHeading, firstParagraph].filter(Boolean) as HTMLElement[];
-        secondLines = [secondHeading, secondParagraph].filter(Boolean) as HTMLElement[];
-      }
-
-      const isMobile = window.innerWidth < 768;
-      const slideDistance = isMobile ? 20 : 40;
-
-      gsap.set(firstLines, { opacity: 1, x: 0 });
-      gsap.set(secondLines, { opacity: 0, x: slideDistance });
+      gsap.set(firstElements, { opacity: 1, x: 0 });
+      gsap.set(secondElements, { opacity: 0, x: isMobile ? 25 : 45 });
       gsap.set(secondText, { opacity: 1 });
 
       /* =====================================================
          MAIN SCROLL TIMELINE
          ===================================================== */
       const frameObject = { frame: 0 };
+      const scrollDistance = isMobile ? window.innerHeight * 2.5 : window.innerHeight * 4;
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: () => `+=${window.innerHeight * 4}`,
-          scrub: 0.5,
+          end: () => `+=${scrollDistance}`,
+          scrub: 0.6,
           pin: true,
           pinSpacing: true,
-          refreshPriority: 5,
-          anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const frame = Math.round(self.progress * (FRAME_COUNT - 1));
@@ -204,25 +186,27 @@ const SequenceSection = () => {
         0
       );
 
+      // Fade out first text
       tl.to(
-        firstLines,
+        firstElements,
         {
           opacity: 0,
           x: isMobile ? 30 : 60,
-          stagger: { each: 0.05, from: "start" },
-          duration: 1.5,
+          stagger: 0.1,
+          duration: 1.6,
           ease: "power2.inOut",
         },
-        3
+        2.5
       );
 
+      // Fade in second text
       tl.to(
-        secondLines,
+        secondElements,
         {
           opacity: 1,
           x: 0,
-          stagger: { each: 0.05, from: "start" },
-          duration: 1.5,
+          stagger: 0.1,
+          duration: 1.6,
           ease: "power2.out",
         },
         5.5
@@ -235,11 +219,7 @@ const SequenceSection = () => {
          ===================================================== */
       return () => {
         window.removeEventListener("resize", resizeCanvas);
-
-        firstHeadingSplit?.revert();
-        firstParagraphSplit?.revert();
-        secondHeadingSplit?.revert();
-        secondParagraphSplit?.revert();
+        tl.kill();
       };
     },
     { scope: sectionRef }
@@ -248,8 +228,15 @@ const SequenceSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen w-full overflow-hidden bg-black will-change-transform"
+      className="relative h-[100svh] min-h-[600px] w-full overflow-hidden bg-black"
     >
+      {/* Fallback image: instantly visible before JS or canvas loads */}
+      <img
+        src="/images/home/frames/frame_001.jpg"
+        alt="Roselin experience"
+        className="absolute inset-0 h-full w-full object-cover pointer-events-none"
+      />
+
       <canvas
         ref={canvasRef}
         className="absolute inset-0 h-full w-full block"

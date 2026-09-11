@@ -54,9 +54,8 @@ export const LenisProvider = ({ children, options }: LenisProviderProps) => {
       autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
     });
 
-    // Normalize scroll handles address bar resizing on mobile by intercepting the scroll
-    // Removed normalizeScroll as it conflicts with Lenis and causes severe iOS bugs/freezing
-    ScrollTrigger.normalizeScroll(true);
+    // Removed normalizeScroll as it conflicts with Lenis and causes touch click interception on mobile devices
+    ScrollTrigger.normalizeScroll(false);
 
     const lenisInstance = new Lenis({
       duration: 1.2,
