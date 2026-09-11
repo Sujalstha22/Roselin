@@ -3,13 +3,34 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --color-rose-red: #c9184a;
+  --color-rose-mist: #f9e7ea;
+  --color-blush: #f4c2cc;
+  --color-ivory: #fff9f5;
+  --color-burgundy: #4a1024;
+  --color-near-black: #181114;
+  --color-champagne: #e8c7a8;
+  --color-soft-gold: #c9a46c;
+  --color-mocha: #6b4549;
+}
+
+@theme {
+  --color-rose-red: var(--color-rose-red);
+  --color-rose-mist: var(--color-rose-mist);
+  --color-blush: var(--color-blush);
+  --color-ivory: var(--color-ivory);
+  --color-burgundy: var(--color-burgundy);
+  --color-near-black: var(--color-near-black);
+  --color-champagne: var(--color-champagne);
+  --color-soft-gold: var(--color-soft-gold);
+  --color-mocha: var(--color-mocha);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-poppins: var(--font-poppins);
+  --font-astoria: var(--font-astoria);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,4 +44,24 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes sparkle {
+
+  0%,
+  100% {
+    opacity: 0.1;
+    transform: scale(0.7);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-sparkle {
+  animation-name: sparkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
