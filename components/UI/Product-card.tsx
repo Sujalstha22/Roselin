@@ -55,7 +55,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div
             onClick={handleViewDetails}
             className={`group relative flex flex-col justify-between transition-all duration-300 overflow-hidden cursor-pointer
-                bg-burgundy border border-burgundy/15 hover:border-rose-red/40 ` }
+                 border border-[#DBCEBF]/80 hover:border-rose-red/40 ` }
         >
             {/* Top Header: Discount Badge and Wishlist Button */}
             <div className="absolute top-2.5 left-2.5 right-2.5 z-20 flex items-center justify-between pointer-events-none">
@@ -96,7 +96,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
             {/* Product Image Area */}
             <div
-                className={`relative w-full h-[210px] sm:h-[230px] md:h-[245px] flex items-center justify-center p-6 overflow-hidden bg-burgundy`}
+                className={`relative w-full h-[210px] sm:h-[230px] md:h-[245px] flex items-center justify-center p-6 overflow-hidden bg-[#DBCEBF]`}
             >
                 <Image
                     src={product.image}

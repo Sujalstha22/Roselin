@@ -23,7 +23,6 @@ const Navbar = () => {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-
   // Navbar scroll states
   const [isScrolled, setIsScrolled] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
@@ -99,7 +98,6 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [menuOpen]);
-
 
   /* =========================================================
      CLOSE MOBILE MENU ON ROUTE CHANGE
@@ -300,9 +298,10 @@ const Navbar = () => {
                       transition-transform
                       duration-300
 
-                      ${isActive
-                        ? "scale-x-100"
-                        : "scale-x-0 group-hover:scale-x-100"
+                      ${
+                        isActive
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100"
                       }
                     `}
                   />
@@ -342,8 +341,8 @@ const Navbar = () => {
               className="
                 relative
                 flex
-                min-h-[44px]
-                min-w-[44px]
+                min-h-[34px]
+                min-w-[34px]
                 touch-manipulation
                 cursor-pointer
                 items-center
@@ -362,7 +361,7 @@ const Navbar = () => {
               >
                 <path d="M0 0h24v24H0z" fill="none" />
 
-                <g fill="none" stroke="currentColor" strokeWidth="1.8">
+                <g fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path strokeLinecap="round" d="M8 12V8a4 4 0 1 1 8 0v4" />
 
                   <path
@@ -400,8 +399,8 @@ const Navbar = () => {
                 onClick={toggleAudio}
                 className="
                   flex
-                  min-h-[44px]
-                  min-w-[44px]
+                  max-h-[34px]
+                  max-w-[34px]
                   touch-manipulation
                   items-center
                   justify-center
@@ -424,7 +423,7 @@ const Navbar = () => {
                     <path
                       d="M11 5L6 9H3v6h3l5 4V5Z"
                       stroke="currentColor"
-                      strokeWidth="1.7"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
@@ -432,14 +431,14 @@ const Navbar = () => {
                     <path
                       d="M17 9L21 15"
                       stroke="currentColor"
-                      strokeWidth="1.7"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
 
                     <path
                       d="M21 9L17 15"
                       stroke="currentColor"
-                      strokeWidth="1.7"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
                   </svg>
@@ -453,7 +452,7 @@ const Navbar = () => {
                     <path
                       d="M11 5L6 9H3v6h3l5 4V5Z"
                       stroke="currentColor"
-                      strokeWidth="1.7"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
@@ -461,14 +460,14 @@ const Navbar = () => {
                     <path
                       d="M15.5 8.5a5 5 0 0 1 0 7"
                       stroke="currentColor"
-                      strokeWidth="1.7"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
 
                     <path
                       d="M18.5 6a8.5 8.5 0 0 1 0 12"
                       stroke="currentColor"
-                      strokeWidth="1.7"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                     />
                   </svg>
@@ -496,9 +495,10 @@ const Navbar = () => {
 
           xl:hidden
 
-          ${menuOpen
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0"
+          ${
+            menuOpen
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none opacity-0"
           }
         `}
       >
@@ -530,9 +530,10 @@ const Navbar = () => {
                   transition-all
                   duration-500
 
-                  ${menuOpen
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-5 opacity-0"
+                  ${
+                    menuOpen
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-5 opacity-0"
                   }
                 `}
                 style={{

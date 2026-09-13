@@ -35,7 +35,7 @@ const galleryItems = [
 
 export default function Gallery() {
   return (
-    <section className="relative h-screen w-full bg-burdundy overflow-hidden">
+    <section className="relative h-screen w-full bg-burgundy overflow-hidden">
       <ThreeDImageRing images={galleryItems} draggable autoRotate />
     </section>
   );

@@ -142,7 +142,7 @@ const ExperienceSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[100svh] min-h-[600px] bg-burgundy md:h-dvh"
+      className="relative h-[100svh] min-h-[600px] bg-black md:h-dvh"
     >
       <div
         className="
@@ -192,7 +192,7 @@ const ExperienceSection = () => {
               z-0
               h-full
               w-full
-              overflow-hidden
+              overflow-visible
             "
           >
             <video
@@ -208,7 +208,7 @@ const ExperienceSection = () => {
 
           {/* IMAGE PANELS */}
 
-          <div className="absolute inset-0 z-10 flex h-full w-full overflow-hidden">
+          <div className="absolute inset-0 z-10 flex h-full w-full overflow-visible">
             {images.map((image) => (
               <div
                 key={image.alt}
@@ -216,7 +216,7 @@ const ExperienceSection = () => {
                   image-panel
                   relative
                   h-full
-                  w-1/4
+                  w-[50vw]
                   overflow-hidden
                 "
               >
