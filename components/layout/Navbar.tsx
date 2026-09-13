@@ -217,12 +217,12 @@ const Navbar = () => {
                 block
                 aspect-4/2
                 w-[24vw]
-                md:w-[10vw]
-                xl:w-[6vw]
+                md:w-[26vw]
+                xl:w-[8vw]
               "
             >
-              {/* <Image
-                src="/white-logo.svg"
+              <Image
+                src="images/logo-white.svg"
                 alt="Roselin"
                 fill
                 priority
@@ -231,7 +231,7 @@ const Navbar = () => {
                   object-center
                   xl:object-left
                 "
-              /> */}
+              />
               <span className="sr-only">Roselin</span>
             </TransitionLink>
           </div>
@@ -298,10 +298,9 @@ const Navbar = () => {
                       transition-transform
                       duration-300
 
-                      ${
-                        isActive
-                          ? "scale-x-100"
-                          : "scale-x-0 group-hover:scale-x-100"
+                      ${isActive
+                        ? "scale-x-100"
+                        : "scale-x-0 group-hover:scale-x-100"
                       }
                     `}
                   />
@@ -495,10 +494,9 @@ const Navbar = () => {
 
           xl:hidden
 
-          ${
-            menuOpen
-              ? "pointer-events-auto opacity-100"
-              : "pointer-events-none opacity-0"
+          ${menuOpen
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
           }
         `}
       >
@@ -530,10 +528,9 @@ const Navbar = () => {
                   transition-all
                   duration-500
 
-                  ${
-                    menuOpen
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-5 opacity-0"
+                  ${menuOpen
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-5 opacity-0"
                   }
                 `}
                 style={{
