@@ -39,12 +39,17 @@ export default function About() {
 
                 gsap.fromTo(
                     centerImgRef.current,
-                    { y: 60 },
+                    {
+                        y: 60,
+                        scale: 1.2,
+                    },
                     {
                         y: -60,
+                        scale: 1.1,
                         ease: "none",
                         scrollTrigger: {
                             trigger: section,
+
                             start: "top bottom",
                             end: "bottom top",
                             scrub: 1.5,
@@ -81,7 +86,7 @@ export default function About() {
         >
 
 
-            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="relative mx-auto  max-w-[90vw] px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_1.1fr_1fr] md:gap-4 lg:gap-6">
 
                     <div ref={headingRef} className="flex flex-col justify-between gap-8">
@@ -119,7 +124,7 @@ export default function About() {
                                     className="absolute inset-0"
                                     style={{
                                         background:
-                                            "linear-gradient(160deg, rgba(249,231,234,0.45) 0%, transparent 70%)",
+                                            "linear-gradient(180deg, transparent 55%, rgba(74,16,36,0.12) 100%)",
                                     }}
                                 />
                             </div>
@@ -128,15 +133,14 @@ export default function About() {
                     </div>
 
                     <div
-                        className="relative overflow-hidden rounded-2xl"
-                        style={{ background: "var(--color-black)" }}
+                        className="relative overflow-hidden rounded-2xl w-[35vw] bg-black"
                     >
                         <div
                             ref={centerImgRef}
                             className="relative h-[420px] w-full md:h-[50vh] lg:h-[86vh]"
                         >
                             <Image
-                                src="/images/home/abt-2.jpg"
+                                src="/images/home/abt-2.2.jpg"
                                 alt="abt-2"
                                 fill
                                 sizes="(max-width: 767px) 100vw, 36vw"
@@ -147,7 +151,7 @@ export default function About() {
                                 className="absolute inset-0"
                                 style={{
                                     background:
-                                        "linear-gradient(180deg, rgba(249,231,234,0.3) 0%, transparent 50%)",
+                                        "linear-gradient(180deg, transparent 55%, rgba(74,16,36,0.12) 100%)",
                                 }}
                             />
                         </div>
@@ -175,15 +179,15 @@ export default function About() {
                             />
                         </div>
 
-                        <div className="px-1">
+                        <div className="px-3">
                             <p
-                                className="text-[10px] font-astoria uppercase tracking-[0.22em]"
+                                className="text-[2.5vh] font-astoria uppercase tracking-[0.22em]"
                                 style={{ color: "var(--color-white)" }}
                             >
                                 WEAR YOUR CONFIDENCE
                             </p>
                             <p
-                                className="mt-1 text-xs leading-relaxed font-poppins"
+                                className="mt-1 text-sm leading-relaxed font-poppins"
                                 style={{ color: "var(--color-ivory)" }}
                             >
                                 A perfected formula that glides effortlessly, stays beautifully in place, and turns every expression into a statement.

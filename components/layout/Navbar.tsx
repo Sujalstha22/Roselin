@@ -218,7 +218,7 @@ const Navbar = () => {
                 aspect-4/2
                 w-[24vw]
                 md:w-[26vw]
-                xl:w-[8vw]
+                xl:w-[7vw]
               "
             >
               <Image

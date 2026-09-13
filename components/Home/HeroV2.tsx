@@ -19,9 +19,9 @@ export default function HeroV2() {
             </div>
 
             {/* Influenced People Badge (Right) */}
-            <div className="absolute right-4 sm:right-8 md:right-16 top-1/2 -translate-y-1/2 z-20 flex items-center gap-3 bg-black/35 backdrop-blur-md px-3.5 py-2.5 rounded-full border border-white/15 shadow-xl">
-                {/* Avatars Stack */}
-                <div className="flex -space-x-3 items-center">
+            {/* <div className="absolute right-4 sm:right-8 md:right-16 top-1/2 -translate-y-1/2 z-20 flex items-center gap-3 bg-black/35 backdrop-blur-md px-3.5 py-2.5 rounded-full border border-white/15 shadow-xl"> */}
+            {/* Avatars Stack */}
+            {/* <div className="flex -space-x-3 items-center">
                     <div className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-rose-red ring-1 ring-black">
                         <Image
                             src="/images/about/abt-1.jpg"
@@ -55,20 +55,20 @@ export default function HeroV2() {
                         Influenced people
                     </div>
                 </div>
-            </div>
+            </div> */}
 
             {/* Main Bottom Section */}
-            <div className="absolute inset-x-0 bottom-0 z-20 px-6 sm:px-10 md:px-16 pb-8 sm:pb-12 md:pb-14 flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <div className="absolute inset-x-0 bottom-0 z-20 px-6 sm:px-16 md:px-24 pb-8 sm:pb-12 md:pb-14 flex flex-col md:flex-row md:items-end justify-between gap-8">
                 {/* Headline & Description */}
                 <div className="max-w-3xl">
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[5rem] font-bold tracking-tight leading-[0.95] text-white">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[5rem] font-bold tracking-tight leading-[0.95] text-white ">
                         Where Style<br />
                         Speaks Volumes.
                     </h1>
 
                     <div className="mt-6 sm:mt-8 flex items-start gap-4">
-                        <div className="w-8 sm:w-10 h-[1.5px] bg-white/60 mt-2.5 shrink-0" />
-                        <p className="text-xs sm:text-sm text-ivory/85 leading-relaxed max-w-md font-poppins font-light">
+
+                        <p className="text-md sm:text-md text-ivory/85 leading-relaxed max-w-md font-poppins font-light">
                             Discover a curated selection that fuses cutting-edge style with enduring quality, designed for the modern individual.
                         </p>
                     </div>
