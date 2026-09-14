@@ -111,9 +111,8 @@ const Footer = () => {
                 />
 
                 {/* Sparkle effect below WebX Nepal logo */}
-                <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 h-8 w-28 pointer-events-none overflow-hidden">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 h-px w-full bg-linear-to-r from-transparent via-ivory/70 to-transparent" />
-                  <Sparkle count={35} minSize={1} maxSize={2.5} color="#fff9f5" />
+                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 h-5 w-full pointer-events-none overflow-hidden">
+                  <Sparkle count={20} minSize={1} maxSize={2} color="#fff9f5" />
                 </div>
               </div>
             </a>

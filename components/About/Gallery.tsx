@@ -35,7 +35,8 @@ const galleryItems = [
 
 export default function Gallery() {
   return (
-    <section className="relative h-screen w-full bg-burgundy overflow-hidden">
+    <section className="relative h-screen w-full overflow-hidden">
+      <h1 className="text-center text-7xl text-burgundy"> The Roselin Confidence</h1>
       <ThreeDImageRing images={galleryItems} draggable autoRotate />
     </section>
   );

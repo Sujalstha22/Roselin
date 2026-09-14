@@ -39,7 +39,7 @@ const ThreeDImageRing: React.FC<ThreeDImageRingProps> = ({
   autoRotate = true,
   autoRotateSpeed = 0.04,
   containerClassName = "",
-  backgroundColor = "#4a1024",
+  backgroundColor = "#ededed",
 }) => {
   // Normalize gallery items with titles and categories matching screenshot
   const normalizedItems: GalleryItemData[] = React.useMemo(() => {
